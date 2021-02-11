@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +16,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'email', 'address',
+        'password', 'website', 'phone', 'company'
     ];
 
     /**
@@ -34,6 +35,32 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'address' => 'array',
+        'company' => 'array',
+        'email_verified_at' => 'datetime'
     ];
+
+    /**
+     * Get Address
+     */
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
+    /**
+     * Get Albums
+     */
+    public function albums()
+    {
+        return $this->hasMany(Album::class);
+    }
+
+    /**
+     * Get Company
+     */
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
 }
